@@ -1,5 +1,5 @@
 import requests
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, json
 
 BASE_URL = 'https://api.github.com'
 
@@ -7,7 +7,12 @@ app = Flask(__name__, template_folder='')
 
 
 def get_newest_repos(search_term):
-    pass
+    url = BASE_URL + '/search/repositories'
+    response = requests.get(url, params={'q': search_term})
+    repos = json.loads(response.content)['items']
+    latest_repos = sorted(repos, key=lambda k: k.get(
+        "created_at", 0), reverse=True)[:5]
+    return latest_repos
 
 
 @app.route('/navigator')

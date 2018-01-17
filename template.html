@@ -4,7 +4,9 @@
 	<title>GitHub Navigator</title>
 </head>
 <body>
-	<h1>{{search_term}}</h1>
-Hello World
+    <h1>{{search_term}}</h1>
+    {% for repo in repos %}
+        <h2>{{repo['name']}}
+    {% endfor %}
 </body>
 </html>
