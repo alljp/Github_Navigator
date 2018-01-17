@@ -6,8 +6,12 @@ BASE_URL = 'https://api.github.com'
 app = Flask(__name__, template_folder='')
 
 
-def load_latest_commit(repo):
-    pass
+def get_latest_commit(repo):
+    url = BASE_URL + '/repos/' + repo['full_name'] + '/commits'
+    response = requests.get(url)
+    commits = json.loads(response.content)
+    repo['latest_commit'] = commits[0]
+    return repo
 
 
 def get_newest_repos(search_term):
@@ -16,7 +20,7 @@ def get_newest_repos(search_term):
     repos = json.loads(response.content)['items']
     latest_repos = sorted(repos, key=lambda k: k.get(
         "created_at", 0), reverse=True)[:5]
-    return map(load_latest_commit, latest_repos)
+    return map(get_latest_commit, latest_repos)
 
 
 @app.route('/navigator')

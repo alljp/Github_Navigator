@@ -6,7 +6,8 @@
 <body>
     <h1>{{search_term}}</h1>
     {% for repo in repos %}
-        <h2>{{repo['name']}}
+        <h2>{{repo['name']}}</h2>
+        <p>{{repo['latest_commit']['commit']['message']}}</p>
     {% endfor %}
 </body>
 </html>
