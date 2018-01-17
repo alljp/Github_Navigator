@@ -8,7 +8,7 @@ app = Flask(__name__, template_folder='')
 
 @app.route('/navigator')
 def list_repos():
-    return "Hello"
+    return render_template('template.html')
 
 
 if __name__ == '__main__':
