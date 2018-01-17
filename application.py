@@ -27,7 +27,8 @@ def get_newest_repos(search_term):
 def list_repos():
     search_term = request.args.get('search_term', None)
     repos = get_newest_repos(search_term)
-    return render_template('template.html', search_term=search_term, repos=repos)
+    return render_template('template.html',
+                           search_term=search_term, repos=repos)
 
 
 if __name__ == '__main__':
