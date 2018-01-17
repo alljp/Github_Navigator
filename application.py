@@ -6,6 +6,21 @@ BASE_URL = 'https://api.github.com'
 app = Flask(__name__, template_folder='')
 
 
+def parse_and_check(content):
+    """
+    Try and parse the JSON returned from GitHub API and raise an exception if there is any error.
+    Also check for errors due to  some GitHub API network outages or rate limits
+    """
+
+    try:
+        data = json.loads(content.decode('utf-8'))
+        if 'message' in data:
+            raise Exception(data['message'])
+        return data
+    except ValueError:
+        raise Exception('Unknown error: ' + content)
+
+
 def get_latest_commit(repo):
     """
     Gets the commits for a repo, and load the latest commit to it.
@@ -13,7 +28,7 @@ def get_latest_commit(repo):
 
     url = BASE_URL + '/repos/' + repo['full_name'] + '/commits'
     response = requests.get(url)
-    commits = json.loads(response.content)
+    commits = parse_and_check(response.content)
     repo['latest_commit'] = commits[0]
     return repo
 
@@ -26,7 +41,7 @@ def get_newest_repos(search_term):
 
     url = BASE_URL + '/search/repositories'
     response = requests.get(url, params={'q': search_term})
-    repos = json.loads(response.content)['items']
+    repos = parse_and_check(response.content)['items']
     latest_repos = sorted(repos, key=lambda k: k.get(
         "created_at", 0), reverse=True)[:5]
     return map(get_latest_commit, latest_repos)
@@ -42,7 +57,6 @@ def list_repos():
         return render_template('template.html',
                                search_term=search_term, repos=repos)
     except Exception as error:
-        print(error)
         return str(error)
 
 if __name__ == '__main__':
