@@ -7,6 +7,9 @@ app = Flask(__name__, template_folder='')
 
 
 def get_latest_commit(repo):
+	"""
+	Gets the commits for a repo, and load the latest commit to it.
+	"""
     url = BASE_URL + '/repos/' + repo['full_name'] + '/commits'
     response = requests.get(url)
     commits = json.loads(response.content)
@@ -15,6 +18,10 @@ def get_latest_commit(repo):
 
 
 def get_newest_repos(search_term):
+	"""
+	Get the first page of results returned by the GitHub search API, sort 
+	them according to the date of creation, and return the latest 5 repos
+	"""
     url = BASE_URL + '/search/repositories'
     response = requests.get(url, params={'q': search_term})
     repos = json.loads(response.content)['items']
