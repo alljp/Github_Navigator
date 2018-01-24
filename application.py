@@ -5,6 +5,8 @@ BASE_URL = 'https://api.github.com'
 
 app = Flask(__name__)
 
+KNOWN_MSGS = ['Git Repository is empty.']
+
 
 def parse_and_check(content):
     """
@@ -15,7 +17,7 @@ def parse_and_check(content):
     try:
         data = json.loads(content.decode('utf-8'))
         if 'message' in data:
-            if data['message'] == 'Git Repository is empty.':
+            if data['message'] in KNOWN_MSGS:
                 return None
             raise Exception(data['message'])
         return data
