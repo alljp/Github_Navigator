@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, json
 
 BASE_URL = 'https://api.github.com'
 
-app = Flask(__name__, template_folder='')
+app = Flask(__name__)
 
 
 def parse_and_check(content):
