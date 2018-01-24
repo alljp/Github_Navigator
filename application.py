@@ -48,7 +48,9 @@ def get_newest_repos(search_term):
     repos = parse_and_check(response.content)['items']
     latest_repos = sorted(repos, key=lambda k: k.get(
         "created_at", 0), reverse=True)[:5]
-    return map(get_latest_commit, latest_repos)
+    if latest_repos:
+        return map(get_latest_commit, latest_repos)
+    return None
 
 
 @app.route('/navigator')
