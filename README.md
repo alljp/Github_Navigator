@@ -14,16 +14,16 @@ DEPENDENCIES
 
 Use the venv module to setup a virtual enviroment by running 
 
-  $ python3 -m venv <name-of-env>
+  ```$ python3 -m venv <name-of-env>```
 
 Then activate the virtual environment using
   
-  $ source <path-to-the-virtualenv>/bin/active
+  ```$ source <path-to-the-virtualenv>/bin/active```
 
 You should now be using your virtualenv (notice how the prompt of your shell has changed to show the active environment).
 
 Install the dependecies:
-  $ pip install -r dependencies
+  ```$ pip install -r dependencies```
 
 The following depenedencies are installed:
     Flask: a micro webdevelopment framework for Python
@@ -33,7 +33,7 @@ RUN THE APP
 -----------
 
 To run the app activate the venv, and run the script:
-  $ python application.py
+  ```$ python application.py```
 
 The application will be runnng on port 9876 and can be accessed on the browser as:
 
