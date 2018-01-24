@@ -53,6 +53,11 @@ def get_newest_repos(search_term):
     return None
 
 
+@app.route('/')
+def home():
+    return render_template('home.html')
+
+
 @app.route('/navigator')
 def list_repos():
     search_term = request.args.get('search_term', None)
