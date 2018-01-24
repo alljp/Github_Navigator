@@ -15,6 +15,8 @@ def parse_and_check(content):
     try:
         data = json.loads(content.decode('utf-8'))
         if 'message' in data:
+            if data['message'] == 'Git Repository is empty.':
+                return None
             raise Exception(data['message'])
         return data
     except ValueError:
@@ -29,6 +31,8 @@ def get_latest_commit(repo):
     url = BASE_URL + '/repos/' + repo['full_name'] + '/commits'
     response = requests.get(url)
     commits = parse_and_check(response.content)
+    if commits is None:
+        return repo
     repo['latest_commit'] = commits[0]
     return repo
 
