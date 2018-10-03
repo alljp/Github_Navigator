@@ -7,7 +7,7 @@ The app searches GitHub repositories by given search term and present the result
 REQUIREMENTS
 ------------
 
-Python3.3 or higher
+Python3.3 or higher.
 
 DEPENDENCIES
 ------------
